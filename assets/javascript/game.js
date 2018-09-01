@@ -21,7 +21,7 @@
  //Step3: Create Game Object
 var gameObject = {
     //Push space on twice, so it seperates the words appropriately when displayed to screen after the .join
-    bands :["The Gap Band", "War", "The Jackson 5", "Parliament", "Ohio  Players", "Lakeside", "james Brown", "Sly And The Family Stone", "Kool And The Gang", "Earth Wind And Fire"],
+    bands :["The Gap Band", "War", "The Jackson 5", "Parliament", "Ohio  Players", "Lakeside", "James Brown", "Sly and The Family Stone", "Kool and The Gang", "Earth Wind and Fire"],
     songs : ["Party Train", "Slippin Into Darkness", "ABC", "Flashlight", "I Want To Be Free", "Fantastic Voyage", "The Payback", "Sing A Simple Song", "Get Down On It", "Lets Groove Tonight"],
     imageID : "bandImage",
     audioID: "audioImage",
@@ -329,7 +329,7 @@ document.onkeyup = function(event) {
             gameObject.updateGameVariables(keyPressed.toLowerCase());
         }
         //Step11: If key not in band name decrement remaining guesses, until there are no more guesses remaining
-        else{
+        else if(!isUpperCaseKeyInBandName && !isLowerCaseKeyInBandName){
             //11a: Decrement remaining guesses
             if(gameObject.remainingGuesses > 0){
                 gameObject.decrementRemainingGuesses(keyPressed);
