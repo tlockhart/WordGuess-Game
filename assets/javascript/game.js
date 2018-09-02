@@ -1,96 +1,68 @@
- //Step2: Create a reference variable to all the html output elements.
+ //Step1: Create a reference variable to all the html output elements.
  var songNameRef = document.getElementById('songNameOutput');
  var imageNameRef = document.getElementById('imageNameOutput');
-/* var imageRef = document.getElementById('imageOutput');*/
- /*var audioRef = document.getElementById('audioOutput');*/
  var winsCtrRef = document.getElementById('winsCtrOutput');
  var hiddenBandNameRef = document.getElementById('hiddenBandNameOutput');
  var remainingGuessesRef = document.getElementById('remainingGuessesOutput');
- var userGuessesRef = document.getElementById('userGuessesOutput');
+ var userIncorrectGuessesRef = document.getElementById('userIncorrectGuessesOutput');
  var instructionRef = document.getElementById('instructionOutput');
  var states = {
     START : "start",
     WIN : "win",
-    LOSE : "lose", //user ran out of remainingGuesses
+    LOSS : "loss", //user ran out of remainingGuesses
     END: "end",  //user got to the end of the bandNames, or score equals length of bandnames.
     DORMENT : "dorment"
     };
-    //var states = new enums.Enum("start", "lose", "end", "dorment");
- //var startKey;
 
- //Step3: Create Game Object
+ //Step2: Create Game Object
 var gameObject = {
-    //Push space on twice, so it seperates the words appropriately when displayed to screen after the .join
-    bands :["The Gap Band", "War", "The Jackson 5", "Parliament", "Ohio  Players", "Lakeside", "James Brown", "Sly and The Family Stone", "Kool and The Gang", "Earth Wind and Fire"],
-    songs : ["Party Train", "Slippin Into Darkness", "ABC", "Flashlight", "I Want To Be Free", "Fantastic Voyage", "The Payback", "Sing A Simple Song", "Get Down On It", "Lets Groove Tonight"],
+   /* bands :["The Gap Band", "War", "The Jackson 5", "Parliament", "Ohio  Players", "Lakeside", "James Brown", "Sly And The Family Stone", "Kool And The Gang", "Earth Wind And Fire"],
+    songs : ["Party Train", "Slippin Into Darkness", "ABC", "Flashlight", "I Want To Be Free", "Fantastic Voyage", "The Payback", "Sing A Simple Song", "Get Down On It", "Lets Groove Tonight"],*/
+    bands :["The Gap Band", "War", "The Jackson 5"],
+    songs : ["Party Train", "Slippin Into Darkness", "ABC"],
     imageID : "bandImage",
     audioID: "audioImage",
     bandNameIndex : 0,
-    winMessage : "You win!  Press Enter to play again.",
-    loseMessage : "You loss!  Press Enter to play again.",
+    winMessage : "Correct!  Press 'Enter' to proceed.",
+    lossMessage : "You are out of guesses.  Press Enter to play again.",
     startMessage: "Press a key to make a guess.",
     dormentMessage: "Guess the band name. Press Enter to play.",
+    endMessage: "You completed the Game! Press Enter to play again.",
     winsCtr : 0,
-    gamesPlayed : 0,
     remainingGuesses : 12,
     currentBand : "none",
     numOfDashes : 0,
     userIncorrectGuesses : [],
     audioName : [],
+    isMediaAdded : false,
     hiddenBandName : [],
     hiddenBandNameString : "none",
-    //isGameEnded : false,
-    isIndexFound : false,
+    doesBandNamesMatch : false,
+    hasGameEnded : function(){
+        return this.state === states.END || this.bandNameIndex === this.bands.length-1;
+    },
+    hasUserLoss : function(){
+        return this.state === states.LOSS;
+    },
+    wasGameStarted : function(){
+        return this.state === states.START;
+    },
+    wasGameWon : function(){
+        return this.state === states.WIN;
+    }, 
     state : states.DORMENT,
     setState : function (state){
         this.state = state;
-        switch(state) {
-            case states.WIN:
-                this.displayOutput(instructionRef, this.winMessage);
-                break;
-                //return "rot";
-            case states.LOSE:
-                this.displayOutput(instructionRef, this.loseMessage);
-                break;
-                //return "grün";
-            case states.START:
-                this.displayOutput(instructionRef, this.startMessage);
-                break;
-                //return "blau";
-            case states.DORMENT:
-                this.displayOutput(instructionRef, this.dormentMessage);
-                break;
-        }
     },
     isGameWon : function(){
-        if(this.hiddenBandNameString === this.currentBand){
-            console.log("*WIN CONDITION IS TURE*");
-            this.setState(states.WIN);
-            this.winsCtr++;
-            this.displayOutput(winsCtrRef, this.winsCtr);
-            this.displayOutput(songNameRef, this.songs[this.bandNameIndex]);
-            this.displayImage("imageOutput");
-            this.playAudio("audioOutput");
-            //this.displayImage();
-
-        }
+        this.doesBandNamesMatch = this.hiddenBandNameString === this.currentBand;
+        console.log("isGAMEWON: STATE = "+this.state+", Does Band Names Match = "+this.doesBandNamesMatch+"; Has GAME ENDED = "+this.hasGameEnded()+"; Has User Loss"+this.hasUserLoss());
+        return  this.doesBandNamesMatch && !this.hasGameEnded() && !this.hasUserLoss();
     },
-    /*displayImage : function(){
-        var img = document.createElement('img');
-        var imageName = this.hiddenBandName.join("");
-
-        //Output Image to page
-        this.displayOutput(imageNameRef, imageName);
-            imageName = "assets/images/"+imageName.replace(/\s/g,'')+".jpg";
-            console.log("IMAGE NAME = "+imageName);
-        img.src = imageName;
-
-        document.getElementById("imageOutput").appendChild(img);
-        
-    },*/
-    //imageName : "assets/images/"+this.hiddenBandName.join("").replace(/\s/g,'')+".jpg",
-    displayImage : function(Id) {
-        //this.imageID = imageID;
+    isGameDorment : function(){
+        return gameObject.state === states.DORMENT;
+    },
+    addImageDisplay : function(Id) {
         var imageName = this.hiddenBandName.join("");
         var imageSource = "assets/images/"+imageName.replace(/\s/g,'')+".jpg";
         var img = document.createElement("IMG");
@@ -99,15 +71,13 @@ var gameObject = {
         document.getElementById(Id).appendChild(img);
         return this.imageId;
     },
-    removeImage() {
+    removeImageDisplay() {
         var elementToBeRemoved = document.getElementById(this.imageID);
         elementToBeRemoved.parentNode.removeChild(elementToBeRemoved);
     },
-    playAudio : function(Id) {
-        //this.imageID = imageID;
+    addAudioDisplay : function(Id) {
         this.audioName = this.songs[this.bandNameIndex];
         console.log("AUDIO FILE NAME = "+this.audioName);
-        //var audioName = this.audioName.join("");
         var audioSource = "assets/audio/"+this.audioName.replace(/\s/g,'')+".mp3";
         console.log("Audio File Name with ext = "+audioSource);
         var audio = document.createElement("audio");
@@ -117,39 +87,49 @@ var gameObject = {
         audio.play();
         return this.audioId;
     },
-    removeAudio() {
+    removeAudioDisplay() {
         var elementToBeRemoved = document.getElementById(this.audioID);
         elementToBeRemoved.parentNode.removeChild(elementToBeRemoved);
     },
-    //increment the game to the next band in the array
-    /********************************************** */
+    /*************************************************/
+    //Increments the game to the next band in the array
+    /*************************************************/
     incrementGame : function(){
-
-        //Step1: Reset guesses to 12
-        //this.resetRemainingGuesses();
-
-        //Step2: Clear HiddenBandName
-        //this.clearCurrentBandName();
-
-        //Step3: increment BandNameIndex
-        if(this.bandNameIndex < 10){
+        //Step3: increment BandNameIndex if game has NOT ENDED
+        var isBandIndexLTLength = this.bandNameIndex < this.bands.length;
+        console.log("bands Index = "+this.bandNameIndex+", bands length = "+(this.bands.length)+", Is Index LT Length = "+isBandIndexLTLength);
+        if(isBandIndexLTLength && !this.hasGameEnded()){
             this.bandNameIndex++;
+            console.log("Incrementing BandIndex NOT RESETTING WINCTR");
+            //NOTE: Clear the userGuessesArray
+            this.clearUserIncorrectGuessesValue();
         }
-        else{
-            this.bandNameIndex = 0;
+        //if game state has ENDED
+        else if(this.hasGameEnded()){
+           // this.bandNameIndex = 0;
+           this.clearBandIndexValue();
+            this.clearWinsCTRValue();
+            console.log("Resetting WINCTR");
+            this.displayOutput(winsCtrRef, this.winsCtr);
+            //Step4: clear the userGuessesArray
+           //this.clearUserIncorrectGuessesValue();
         }
-        //Step4: clear the userGuessesArray
-        this.clearUserIncorrectGuesses();
-        this.clearSongName();
-        this.clearImageName();
-        this.clearHiddenBandName();
-        this.clearCurrentBandName();
-        this.resetRemainingGuesses();
-        this.removeImage();
-        this.removeAudio();
+        this.clearSongNameDisplay();
+        this.clearImageNameDisplay();
+        this.clearHiddenBandNameValue();
+        this.clearCurrentBandNameValue();
+        this.setRemainingGuessesValue();
+        //NOTE: If game state is LOSS or END, there is no media on the screen to remove
+        if(!this.hasGameEnded()){
+            this.removeImageDisplay();
+            this.removeAudioDisplay();
+        }
+        
         this.state = states.START;
+        this.isMediaAdded = false;
     },
-    updateGameVariables : function(keyPressed){
+    //STEP3A - NOTE1: UPDATES HTML ELEMENTS AFTER KEYPRESSED AND SETS THE STATE FOR THE ENTER EVENTS
+    updateHiddenBandNameRealTime : function(keyPressed){
         //Step10a: Get all the indexes where the keypressed occurs
         var indexes = this.getAllIndexes(this.currentBand , keyPressed);
            
@@ -160,9 +140,59 @@ var gameObject = {
              this.displayOutput(hiddenBandNameRef, this.hiddenBandNameString);
 
              //Step 10c: Check if game won
-             this.isGameWon();
+            // 9/01/2018:this.isGameWon();
+            if(this.isGameWon()){
+                console.log("GAME WON = "+this.isGameWon());
+                this.setState(states.WIN);
+                this.displayWinGameScreen(this.winMessage);
+            }
+            else if(this.hasGameEnded() && this.doesBandNamesMatch){
+                console.log("GAMEEND-WON: WINCTR = "+this.winsCtr);
+                this.setState(states.WIN)
+                this.displayEndWinGameScreen(this.endMessage);
+            }
+
     },
-    decrementRemainingGuesses : function(keyPressed){
+    //STEP3B-NOTE2: OVERLOADED FUNCTION TO HANDLE NO UPPER AND LOWER KEYS: UPDATES HTML ELEMENTS AFTER KEYPRESSED AND SETS THE STATE FOR THE ENTER EVENTS
+    updateHiddenBandNameRealTime : function(keyPressedUpper, keyPressedLower){
+        //Step10a: Get all the indexes where the keypressed occurs
+        var indexesUpper = this.getAllIndexes(this.currentBand , keyPressedUpper);
+        var indexesLower = this.getAllIndexes(this.currentBand , keyPressedLower); 
+        //console.log ("Is index in array "+this.isKeyPressedFound(indexes));
+        
+        //Setp10b: If keypressed is in array then update display
+            this.updateHiddenBandName(keyPressedUpper, indexesUpper);
+            this.updateHiddenBandName(keyPressedLower, indexesLower);
+             this.displayOutput(hiddenBandNameRef, this.hiddenBandNameString);
+
+             //Step 10c: Check if game won
+            // 9/01/2018:this.isGameWon();
+            //Catch Win Condition
+            if(this.isGameWon()){
+                console.log("GAME WON = "+this.isGameWon());
+                this.setState(states.WIN);
+                this.displayWinGameScreen(this.winMessage);
+            }
+            //Catch END-WIN Condition
+            else if(this.hasGameEnded() && this.doesBandNamesMatch){
+                console.log("GAMEEND-WON: WINCTR = "+this.winsCtr);
+                this.setState(states.WIN)
+                this.displayEndWinGameScreen(this.endMessage);
+            }
+            //Catch LOSS Condition
+            else if(this.hasUserLoss() && this.remainingGuesses < 1){
+                console.log("GAMEEND-LOSS: WINCTR = "+this.winsCtr);
+                this.setState(states.LOSS)
+                this.displayEndLossGameScreen(this.endMessage);
+            }
+            //NOT NECESSARY: CATCH START NO REMAINING GUESS CONDITION
+            else if(this.wasGameStarted() && this.remainingGuesses <1){
+                console.log("GAMEEND-LOSS: WINCTR = "+this.winsCtr);
+                this.setState(states.LOSS)
+                this.displayEndLossGameScreen(this.endMessage);
+            }
+    },
+    decrementRemainingGuessesValue : function(keyPressed){
         if(this.userIncorrectGuesses.indexOf(keyPressed) > -1){
             //don't decrement remainingGuesses if key has already been clicked
         }
@@ -171,15 +201,160 @@ var gameObject = {
             this.remainingGuesses=this.remainingGuesses-1;
         }
     },
-    resetRemainingGuesses : function(){
+    incrementBandNameIndexValue : function(){
+        this.bandNameIndex++;
+    },
+    incrementWinCTR : function(){
+        this.winsCtr++;
+    },
+    setRemainingGuessesValue : function(){
         this.remainingGuesses = 12;
+    },
+    clearBandIndexValue : function(){
+        this.bandNameIndex = 0;
+    },
+    clearWinsCTRValue : function(){
+        this.winsCtr = 0;
     },
     displayOutput : function(outputElement, value){
         outputElement.textContent = value;
     },
+    displayWinGameScreen :function(message){
+        //1: display Song Name
+        this.displayOutput(songNameRef, this.songs[this.bandNameIndex]);
+        //2: display Image Name
+        this.displayOutput(imageNameRef, this.hiddenBandName.join(""));
+        //3: Display media
+        if(!this.isMediaAdded){
+            this.addImageDisplay("imageOutput");
+            this.addAudioDisplay("audioOutput");
+            this.isMediaAdded = true;
+        }
+        //4. Display instructions;
+        this.displayOutput(instructionRef, message);
+        
+        //5.Display wins ctr
+        console.log("displayWinGameScreen: winCTR = "+this.winsCtr);
+        this.incrementWinCTR();
+        this.displayOutput(winsCtrRef, this.winsCtr);
+
+        console.log("displayWinGameScreen: STATE = "+this.state);
+    },
+    displayNewGameScreen : function(){
+        this.clearSongNameDisplay();
+        this.clearCurrentBandNameValue();
+        this.removeImageDisplay();
+        this.removeAudioDisplay();
+        //set added Media to false;
+        this.isMediaAdded = false;
+        this.clearHiddenBandNameValue();
+        this.displayOutput(imageNameRef, "");
+        this.displayOutput(instructionRef, this.startMessage);
+        //NOTE: LEAVE WIN CTR ALONE
+        //NOTE: Must repopulate the the hiddenBandName and post here
+        this.incrementBandNameIndexValue();
+        console.log("DISPLAYNEWGAMESCREEN: BandIndex = "+this.bandNameIndex);
+        this.fillHiddenBandName(this.bands[this.bandNameIndex]);
+        this.displayOutput(hiddenBandNameRef, this.hiddenBandNameString);
+
+        //Reset Remaining Guesses
+        this.setRemainingGuessesValue();
+        this.displayOutput(remainingGuessesRef, this.remainingGuesses);
+        this.clearUserIncorrectGuessesValue();
+        this.displayOutput(userIncorrectGuessesRef, this.userIncorrectGuesses);
+    },
+    displayEndWinGameScreen : function(){
+          //1: display Song Name
+          this.displayOutput(songNameRef, this.songs[this.bandNameIndex]);
+          //2: display Image Name
+          this.displayOutput(imageNameRef, this.hiddenBandName.join(""));
+          //3: Add Media
+        if(!this.isMediaAdded)
+        {
+            this.addImageDisplay("imageOutput");
+            this.addAudioDisplay("imageOutput");
+            this.isMediaAdded = true;
+        }
+        //4: Display Instruction
+        this.displayOutput(instructionRef, this.endMessage);
+
+        //5.Display wins ctr
+        console.log("displayWinGameScreen: winCTR = "+this.winsCtr);
+        this.incrementWinCTR();
+        this.displayOutput(winsCtrRef, this.winsCtr);
+
+        console.log("DISPLAYEND-WIN-GAMESCREEN: BandIndex = "+this.bandNameIndex);
+    },
+    displayEndLossGameScreen : function(){
+        this.clearHiddenBandNameValue();
+        this.displayOutput(imageNameRef, "");
+        this.displayOutput(instructionRef, this.lossMessage);
+        console.log("DISPLAYEND-LOSS-GAMESCREEN: BandIndex = "+this.bandNameIndex);
+    },
+    displayEndGameScreen : function(){
+        this.clearSongNameDisplay();
+        this.clearCurrentBandNameValue();       
+        this.isMediaAdded = false;
+
+        this.clearHiddenBandNameValue();
+        this.displayOutput(imageNameRef, "");
+        //1. Change Instructions
+        this.displayOutput(instructionRef, this.startMessage);
+        //2. Reset Win Counter
+        this.clearWinsCTRValue();
+        this.displayOutput(winsCtrRef, this.winsCtr);
+        //3. Reset BandName Index Value
+        this.bandNameIndex = 0;
+        console.log("GAME OBJECT RESET TO 0: BandIndex = "+this.bandNameIndex);
+        //4. Clear Hidden Band Name
+        this.clearHiddenBandNameValue();
+        this.clearCurrentBandNameValue();
+        //5. CREATE HIDDEN BAND DISPLAY
+        this.fillHiddenBandName(this.bands[this.bandNameIndex]);
+        this.displayOutput(hiddenBandNameRef, this.hiddenBandNameString);
+
+        //6.Reset Remaining Guesses
+        this.setRemainingGuessesValue();
+        this.displayOutput(remainingGuessesRef, this.remainingGuesses);
+        this.clearUserIncorrectGuessesValue();
+        this.displayOutput(userIncorrectGuessesRef, this.userIncorrectGuesses);
+    },
+    displayResetALLGameScreen : function(){
+        this.clearSongNameDisplay();
+        this.clearCurrentBandNameValue();
+        this.removeImageDisplay();
+        this.removeAudioDisplay();
+
+        //set added Media to false;
+        this.isMediaAdded = false;
+
+        this.clearHiddenBandNameValue();
+        this.displayOutput(imageNameRef, "");
+        //1. Change Instructions
+        this.displayOutput(instructionRef, this.startMessage);
+        //2. Reset Win Counter
+        this.clearWinsCTRValue();
+        this.displayOutput(winsCtrRef, this.winsCtr);
+        //3. Reset BandName Index Value
+        this.bandNameIndex = 0;
+        console.log("GAME OBJECT RESET TO 0: BandIndex = "+this.bandNameIndex);
+        //4. Clear Hidden Band Name
+        this.clearHiddenBandNameValue();
+        this.clearCurrentBandNameValue();
+        //5. CREATE HIDDEN BAND DISPLAY
+        this.fillHiddenBandName(this.bands[this.bandNameIndex]);
+        this.displayOutput(hiddenBandNameRef, this.hiddenBandNameString);
+
+        //6.Reset Remaining Guesses
+        this.setRemainingGuessesValue();
+        this.displayOutput(remainingGuessesRef, this.remainingGuesses);
+        this.clearUserIncorrectGuessesValue();
+        this.displayOutput(userIncorrectGuessesRef, this.userIncorrectGuesses);
+    },
+    /**************************************************/
+    /*SETS THE HIDDEN BAND NAME AND DISPLAYS TO SCREEN*/
+    /**************************************************/
     fillHiddenBandName : function(currentBand) {
-       // this.clearCurrentBandName();
-        //this.clearHiddenBandName();
         console.log("CurrentBand length = "+currentBand.length);
         for(var i = 0; i < currentBand.length; i++)
         {
@@ -197,8 +372,7 @@ var gameObject = {
         console.log("CURRENT BAND NAME = "+this.currentBand);
         console.log("HIDDENBANDNAME = "+this.hiddenBandName); 
         this.hiddenBandNameString =  this.hiddenBandName.join("");
-        console.log("HIDDENBANDNAME Without Commas = "+this.hiddenBandNameString);
-        
+        console.log("HIDDENBANDNAMESTRING Without Commas = "+this.hiddenBandNameString); 
       },
       getAllIndexes : function(arr, val) {
         var indexes = [], i = -1;
@@ -206,16 +380,10 @@ var gameObject = {
                 indexes.push(i);
             }
             return indexes;
-        //}//if
-        /*Removed while*/
     },
-    /*isKeyPressedFound : function(indexes){
-        if(indexes.length > 0){
-            this.isIndexFound = true;
-        }
-        else this.isIndexFound = false;
-        return this.isIndexFound;
-    },*/
+    /*************************************************/
+    /*Updates the hiddenBandName with the keyPressed*/
+    /*************************************************/
       updateHiddenBandName: function(keyPressed, indexes){
         for(var i = 0; i < indexes.length; i++){
             this.hiddenBandName[indexes[i]] = keyPressed;
@@ -225,91 +393,134 @@ var gameObject = {
         this.hiddenBandNameString =  this.hiddenBandName.join("");
         console.log("UPDATE: Hidden Band Name = "+this.hiddenBandName);
       },
-      clearHiddenBandName : function(){
+      /*************************************************/
+     /*Updates the RemainingGuesses in REAL TIME      */
+    /*************************************************/
+      updateRemainingGuessesRealTime : function(keyPressed){
+        if(this.remainingGuesses > 0){
+            this.decrementRemainingGuessesValue(keyPressed);
+            console.log("UPDATEREMAININGGUESSESREALTIME: Remaining guesses = "+this.remainingGuesses);
+            console.log("UPDATEREMAININGGUESSESREALTIME: GAME STATE = "+this.state);
+
+            this.displayOutput(remainingGuessesRef, this.remainingGuesses);
+
+            //NOTE: Only push new keys into the userGuesses array
+            if(this.userIncorrectGuesses.indexOf(keyPressed) === -1){
+                this.userIncorrectGuesses.push(keyPressed);
+            }
+            console.log("KEYPRESSED IS NOT IN THE BANDNAME, Pushing INTO USERGUESSES ARRAY: "+this.userIncorrectGuesses.toString());
+            console.log("UPDATEREMAININGGUESSESREALTIME: GAME STATE = "+this.state);
+            this.displayOutput(userIncorrectGuessesRef, this.userIncorrectGuesses.toString());    
+       }//if
+       //STEP4: If no more guesses remain set game state to loss;
+       if(this.remainingGuesses === 0) {
+           //gameObject.isGameEnded = false;
+           this.setState(states.LOSS);
+           console.log("UPDATEREMAININGGUESSESREALTIME: No remaining guesses GAME STATE = "+this.state);
+            
+           //STEP5:Handle LOSS CONDITION FOR NO MORE REMAINING GUESSES
+           if (this.hasUserLoss() && this.remainingGuesses < 1) {
+               console.log("GAMEEND-LOSS: WINCTR = " + this.winsCtr);
+               this.setState(states.LOSS)
+               this.displayEndLossGameScreen(this.endMessage);
+               this.setState(states.LOSS);
+           }
+           //gameObject.resetGame();
+        }//else     
+      },
+      clearHiddenBandNameValue : function(){
         this.hiddenBandName  = [];
       },
-      clearUserIncorrectGuesses : function(){
+      clearUserIncorrectGuessesValue : function(){
           this.userIncorrectGuesses = [];
-          this.displayOutput(userGuessesRef, " ");
       },
-      clearSongName : function(){
+      clearCurrentBandNameValue : function(){
+        this.currentband = "";
+    },
+      clearSongNameDisplay : function(){
           this.displayOutput(songNameRef, " ");
       },
-      clearImageName : function(){
+      clearImageNameDisplay : function(){
           this.displayOutput(imageNameRef, " ");
       },
-      clearAllBandNames : function(){
-        this.displayOutput(hiddenBandNameRef, " ");
-        this.hiddenBandNameString = " ";
-        this.clearCurrentBandName();
-        this.clearHiddenBandName();
-      },
-      clearCurrentBandName : function(){
-          this.currentband = " ";
-      },
-      /*removeImage : function(id) {
-        var imageToBeRemoved = document.getElementById(id);
-        imageToBeRemoved.removeChild(imageToBeRemoved);
-    }*/
-    
-    
-};
+     clearUserGuessesDisplay(){
+        this.displayOutput(userIncorrectGuessesRef, " ");
+     }
+}
  
-//Step4 start a listener for the enter key
+/********************************************
+ * Step6: start a listener for the enter key
+ * ******************************************/
 document.onkeyup = function(event) {
     var keyCode = event.code.toLowerCase();
     var keyPressed = event.key.toLowerCase();
     var three = 3;
-    //console.log("KeyCode = "+keyCode);
-    if(keyCode !== "enter") {
-        //console.log("KeyCode Enter = "+keyCode);
-        //console.log("State = "+gameObject.state);
 
-        //Step4a: Set game state
-        if(gameObject.state === states.DORMENT)
-        {
-            console.log("STATE CHECK IS DORMENT");
-            gameObject.setState(gameObject.state);
+    console.log("HAS GAME ENDED = "+gameObject.hasGameEnded());
+    console.log("Key Pressed = "+keyPressed+", Key Code = "+keyCode+", State = "+gameObject.state);
+    console.log("IS GAME DORMENT "+gameObject.isGameDorment());
+    console.log("Has USER LOSS "+gameObject.hasUserLoss());
+
+    //STEP6a: Handle ALL GAME SCENERIOS TO RESET THE SCREEN AFTER ENTER PRESSED
+    //NOTE: REGARDLESS OF GAME STATE RECEIVED, THE GAME STATE MUST BE RETURNED TO START IN ORDER FOR KEYPRESED EVENTS TO BE REGISTERED AGAIN
+    if(keyCode === "enter" && gameObject.isGameDorment() || keyCode === "enter" && gameObject.wasGameWon() || keyCode === "enter" && gameObject.hasGameEnded() || keyCode === "enter" && gameObject.hasUserLoss()){
+       // console.log("--made it inside loop: STATE IS DORMENT?" + gameObject.isGameDorment());
+
+       //HANDLE START OF GAME CONDITION
+       if(gameObject.isGameDorment())
+       {
+           console.log("*GAME NOT ENDED AND NOT WON*: Starting Game");
+           //Step6b: Set game state to start
+            gameObject.setState(states.START);
+            console.log("Game is started!");
+
+          gameObject.currentBand = gameObject.bands[gameObject.bandNameIndex];
+           console.log( "My current Band = "+gameObject.currentBand);
+           gameObject.numOfDashes = gameObject.currentBand.length;
+
+          //Set the hiddenBandName
+          gameObject.fillHiddenBandName(gameObject.currentBand);
+
+          //Display the hiddenBandName
+         gameObject.displayOutput(hiddenBandNameRef, gameObject.hiddenBandNameString);
+
+          //Display Remaining Guesses
+          gameObject.displayOutput(remainingGuessesRef, gameObject.remainingGuesses);
+       }
+       //Handles Winning Condition only, not END OF GAME
+       else if(gameObject.wasGameWon() && !gameObject.hasGameEnded()){
+            console.log("ENTER PRESSED: GAME WAS WON");
+            gameObject.displayNewGameScreen();
+            console.log("LINE472: GAME STATE = "+gameObject.state);
+            gameObject.setState(states.START);
+            //9/01/2018: gameObject.incrementGame();
+            //gameObject.displayWinGameScreen();
         }
-    }
-    //Step5: Determine if game has started
-    //if(keyCode === "enter") 
+        //Step6b: If Game ENDED Due to End of band ARRAY, No Winner: Reset all variables to 0 (winCtr=0, bandNameIndex =0, reminingGuesses= 12 , userIncorrectGuesses =[], hiddenBandName=[], but don't display them, until the START STATE condition.
+        else if(gameObject.hasGameEnded() && gameObject.doesBandNamesMatch && gameObject.remainingGuesses > 0){
+            console.log("*GAME HAS ENDED*: Starting Game");
+            console.log("ENTERING IF2:RESETING ALL VARIABLE");
+           gameObject.displayResetALLGameScreen();
+           gameObject.setState(states.START);
 
-    //Step6: Initialize all game variables if the game just started
-    var wasLastGameWon =  gameObject.state === states.WIN;
-    if(keyCode === "enter" && gameObject.state === states.DORMENT || keyCode === "enter" && wasLastGameWon){
-
-        if(wasLastGameWon)
-        {
-            gameObject.incrementGame();
         }
-        //Step6a: Set game state to start
-        gameObject.setState(states.START);
-        console.log("Game is started!");
-        //Step7: Create an outter loop to cycle through the bandNames
-        //for (var i = 0; i < 1/*gameObject.bands.length*/; i++) 
-        //var i = 0;
+        else if(gameObject.hasGameEnded() && !gameObject.doesBandNamesMatch && gameObject.remainingGuesses < 1){
+            console.log("*GAME HAS ENDED*: Starting Game");
+            console.log("ENTERING IF2:RESETING ALL VARIABLE");
+           gameObject.displayEndGameScreen();
+           gameObject.setState(states.START);
 
-           // console.log("I = " + i);
-            //Step6: Intialize all gameObject variables
-            gameObject.gamesPlayed++;//Must reset when bands.length is 10
-           // gameObject.currentBand = gameObject.bands[i].toLowerCase();
-           gameObject.currentBand = gameObject.bands[gameObject.bandNameIndex];
-            console.log( "My current Band = "+gameObject.currentBand);
-            gameObject.numOfDashes = gameObject.currentBand.length;
-
-           //Set the hiddenBandName
-           gameObject.fillHiddenBandName(gameObject.currentBand);
-
-           //Display the hiddenBandName
-          // gameObject.displayHiddenBandName();
-          gameObject.displayOutput(hiddenBandNameRef, gameObject.hiddenBandNameString);
-
-           //Display Remaining Guesses
-           gameObject.displayOutput(remainingGuessesRef, gameObject.remainingGuesses);
-       // }//for
+        }
+        //If game state is LOST, due to RemainingGuesses == 0, reset all variables, but don't display them until start condition (winCtr =0, remainingGuesses=12, userIncorrectGuesses =[], hiddenBandName=[])
+        else if(gameObject.hasUserLoss()){
+            console.log("*9/02/2018: USER HAS LOSS*: Starting Game");
+            gameObject.displayEndGameScreen();
+           gameObject.setState(states.START);
+        }         
     }//if 
-    //Step8: If game has already started and event.key is a letter or a number, then update the display
+    /**************************************************************************************************************
+    *Step7: If game state is START: And event.key is a letter or a number, then update the display in realtime
+    ***************************************************************************************************************/
     else if(keyCode.substring(0,three) === "dig" || keyCode.substring(0,three)=== "key" && gameObject.state === states.START)
     {
         console.log("keyCode = "+keyCode);
@@ -322,34 +533,21 @@ document.onkeyup = function(event) {
         var isLowerCaseKeyInBandName = gameObject.currentBand.indexOf(keyPressed)!==-1;
 
         //Step10 Check if Key is in bandName
-        if(isUpperCaseKeyInBandName){
-            gameObject.updateGameVariables(keyPressed.toUpperCase());
+        if(isUpperCaseKeyInBandName && !isLowerCaseKeyInBandName){
+            gameObject.updateHiddenBandNameRealTime(keyPressed.toUpperCase());
         }
-        else if(isLowerCaseKeyInBandName){
-            gameObject.updateGameVariables(keyPressed.toLowerCase());
+        else if(isLowerCaseKeyInBandName && !isUpperCaseKeyInBandName){
+            gameObject.updateHiddenBandNameRealTime(keyPressed.toLowerCase());
+        }
+        else if(isLowerCaseKeyInBandName && isUpperCaseKeyInBandName){
+            gameObject.updateHiddenBandNameRealTime(keyPressed.toLowerCase(), keyPressed.toUpperCase());
+            //gameObject.updateHiddenBandNameRealTime(keyPressed.toUpperCase());
         }
         //Step11: If key not in band name decrement remaining guesses, until there are no more guesses remaining
         else if(!isUpperCaseKeyInBandName && !isLowerCaseKeyInBandName){
             //11a: Decrement remaining guesses
-            if(gameObject.remainingGuesses > 0){
-                gameObject.decrementRemainingGuesses(keyPressed);
-                console.log("Remaining guesses = "+gameObject.remainingGuesses);
-                gameObject.displayOutput(remainingGuessesRef, gameObject.remainingGuesses);
-
-                //12b: Only push new keys into the userGuesses array
-                if(gameObject.userIncorrectGuesses.indexOf(keyPressed) === -1){
-                    gameObject.userIncorrectGuesses.push(keyPressed);
-                }
-                console.log("KEYPRESSED IS NOT IN THE BANDNAME, Pushing INTO USERGUESSES ARRAY: "+gameObject.userIncorrectGuesses.toString());
-                gameObject.displayOutput(userGuessesRef, gameObject.userIncorrectGuesses.toString());    
-           }//if
-           //11b: If no more guesses remain game is over resetGame;
-           else {
-               //gameObject.isGameEnded = false;
-               gameObject.setState(states.LOSE);
-               //gameObject.resetGame();
-            }//else     
+           gameObject.updateRemainingGuessesRealTime(keyPressed);
         }//else
-    } //Outter Else if  
+    } //Outter Else if 
 }//Onkey Event
     
