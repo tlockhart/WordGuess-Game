@@ -23,12 +23,16 @@ body{
 h1{
     font-family: PFunk;
 }
-h2, h3, #instructionOutput{
+h2, h3{
    /*font-family: 'Georgia', Times, Times New Roman, serif;*/
    
    font-family: 'Open Sans Condensed', sans-serif;
    color: black;
+   font-weight: bold;
     /*font-family: 'Marvel', sans-serif;*/
+}
+#instructionOutput, #winsCtrOutput, #hiddenBandNameOutput, #remainingGuessesOutput, #userIncorrectGuessesOutput{
+    font-size: 1.375rem;
 }
 .main-wrapper p{
   margin-bottom:20px; 
@@ -56,17 +60,7 @@ header{
     /*font-size:26px; */
     /*font-size: 100%;*/
 }
-h2{
-    /*color:#4aaaa5;*/
-    /*padding: 40px 30px 30px 30px;*/
-    font-weight: bold;
-    /*font-size:24px;*/
-}
-/*.answers{
-    padding:0;
-}
-.questions{
-}*/
+
 .questions{
     /*The border-box value alters the box model so
     that any border or padding property values are 
