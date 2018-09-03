@@ -10,8 +10,26 @@
       
 }
 .gray-row{
-    background-image: url(../images/psycho_prod7.png);
-    /*background-repeat:no-repeat;*/
+    background-image: url(../images/rounds2.png);
+     /* Full height */
+    /* height: 100%;*/
+
+     /* Center and scale the image nicely */
+     /*background-position: center;*/
+
+    
+    /*background-size: auto*/
+    /*background-size: cover;*/
+    /*background-repeat: repeat space;*/
+    width:100%;
+height:100%;
+/*position:absolute;
+top:0;
+bottom:0;
+right:0;
+left:0;*/
+   background-repeat: repeat repeat;
+   /*background-repeat: round space;*/
 }
 /*********************************************/
 
@@ -183,6 +201,7 @@ main{
 }
 .main-wrapper{
     padding: 20px;
+    /*background: url(../images/concrete_seamless.png);*/
 }
 /***************************
 CONTACT FORM
