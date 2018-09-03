@@ -1,37 +1,100 @@
 <!DOCTYPE html>
 <html lang="en-us">
-  <head>
+
+<head>
     <meta charset="UTF-8">
-    <title>Word GUess Game</title>
-
-    <!--Resets-->
+    <title>
+        About
+    </title>
     <link rel="stylesheet" href="assets/css/reset.css">
-    
-    <!--Bootstrap library-->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
 
-    <!--Custom links-->
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    
     <link rel="stylesheet" href="assets/css/style.css">
-
+    <link rel="stylesheet" href="assets/images">
+    <link rel="stylesheet" href="assets/fonts">
+    <link href="https://fonts.googleapis.com/css?family=Marvel|Open+Sans+Condensed:300" rel="stylesheet">
     
+</head>
+<body class="white-row">
+    <!----------------------------------------------------------------->
+    <div class="container-fluid px-0">
+        <!------------------START OF HEADER---------------------->
+        <header class="row align-items-center mx-0"><!--row-->
+                <div class="col-2 align-self-start">
+                    <!--BLANK-->
+                </div><!--col-->
+                <div class="col-8 align-self-start pl-0">
+                    <h1 class="text-center head1">HANGMAN: Funk Edition</h1>
+                </div><!--col-->
+                    </div><!--row-->
+                </div><!--col-->
+                <div class="col-2 align-self-start">
+                            <!--BLANK-->
+                </div><!--col-->
+            </header><!--row-->       
+                    <!--------------------END OF HEADER------------------------>
+                    <!------------------START OF GRAY ROW---------------------->
+         <!------------------------------CHANGES START HERE---------------------------------------->
+        <div class="row gray-row no-gutters"><!--encapsulate main with gray-->
+            <div class="col-3 gray-row"> <!--blank Column-->
+            </div><!--blank Column-->
+            <div class="col-5">
+                    <main class="row px-0 no-gutters white-row">
+                                <div class="col-12">
+                                    <!--div class="row no-gutters">
+                                            <div class="col-12 align-self-start">
+                                            </div>
+                                    </div--><!--row-->
+                                    <!--2ADDED SECTION-->
+                                    <div class="row no-gutters">
+                                            <div class="col-12 main-content">
+                                                <div class="row no-gutters justify-content-center main-wrapper clearfix">
+                                                    <!--div class="col-12 main-wrapper"-->
+                                                            <div class="col-6 answers">
+                                                                    <div><h2 id="imageNameOutput"></span></h2></div>
+                                                                    <!--div id="imageOutput"></div-->
+                                                                    <div id="imageOutput"><img id="defaultImage" src="assets/images/urban.png"></div>
+                                                                    <div><h3 id="songNameOutput"></h3></div>
+                                                                    <div id="audioOutput"></div>
+                                                                </div><!--col-6-->
+                                                                <div class="questions col-6">
+                                                                        <div><ol><h3><b>Instructions:</b></h3><li><p><span id="instructionOutput">Guess the band name. Press Enter to play.</span></p></li></ol></div>
+                                                                        <div><ol><h3><b>Wins Count:</b></h3><li><p><span id="winsCtrOutput"></span></p></li></ol></div>
+                                                                        <div><ol><h3><b>Hidden Band Name:</b></h3><li><p><span id="hiddenBandNameOutput"></span></p></li></ol></div>
+                                                                        <div><ol><h3><b>Remaining Guesses:</b></h3><li><p><span id="remainingGuessesOutput"></span></p></li></ol></div>
+                                                                        <div><ol><h3><b>User Guesses:</b></h3><li><p><span id="userIncorrectGuessesOutput"></span></p></li></ol></div>
+                                                                </div>
+                                                    <!--/div--><!--wrapper-->
+                                                </div><!--row-->
+                                            </div><!--col-12-->
+                                    </div><!--row-->
+                                </div><!--col-12-->
+                    </main><!--row-->
+            </div><!--gray-row col-8-->
 
-    
-  </head>
-  <body>
-    <!--HTML CODE-->
-    <!--Step 1 Create Display Elements-->
-    <div><h1>Song Name: <span id="songNameOutput">Nothing...</span></h1></div>
-    <div id="imageOutput"></div>
-    <div><h1>Image Name: <span id="imageNameOutput">Nothing...</span></h1></div>
-    <div><h1>Instructions: <span id="instructionOutput">Guess the band name. Press Enter to play.</span></h1></div>
-    <div><h1>Wins Count: <span id="winsCtrOutput"></span></h1></div>
-    <div><h1>Hidden Band Name: <span id="hiddenBandNameOutput"></span></h1></div>
-    <div><h1>Remaining Guesses: <span id="remainingGuessesOutput"></span></h1></div>
-    <div><h1>User Guesses: <span id="userIncorrectGuessesOutput"></span></h1></div>
-   <div id="audioOutput"></div> <!--audio src="assets/audio/PartyTrain.mp3" autoplay></audio-->
+            <div class="col-3 gray-row"> <!--blank Column-->
+            </div><!--col--><!--blank Column-->
+<!------------------------------CHANGES END HERE---------------------------------------->
+                    <div class="col-12 align-self-start"><!--Footer Wraps-->
+                            <footer class="col-12 px-0">
+                                <div class="stripe"></div>
+                                <p>Copyright &copy;</p>
+                            </footer>
+                    </div> <!--col-->
+        </div><!-- gray-row-->
+        <!------------------END OF GRAY ROW---------------------->
+    </div><!--container-->
 
-        <!--JS Code-->
-        <script type="text/javascript" src="assets/javascript/game.js"></script>
-
-  </body>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+<!----------------------------------------------------------------->
+<!--JS Code-->
+    <script type="text/javascript" src="assets/javascript/game.js"></script>
+</body>
 </html>

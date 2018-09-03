@@ -1,3 +1,285 @@
+@font-face {
+    font-family: PFunk;
+    src: url(../fonts/Rakoon_PersonalUse.ttf);
+}
+.white-row{
+    /*background:white;*/
+    /*background: url(../images/concrete_seamless.png);*/
+    background:#993D33;
+     
+      
+}
+.gray-row{
+    background-image: url(../images/psycho_prod7.png);
+    /*background-repeat:no-repeat;*/
+}
+/*********************************************/
+
+body{
+   font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+   line-height: 150%;
+   color:#777777;/*Soften the font text*/
+}
+h1{
+    font-family: PFunk;
+}
+h2, h3, #instructionOutput{
+   /*font-family: 'Georgia', Times, Times New Roman, serif;*/
+   
+   font-family: 'Open Sans Condensed', sans-serif;
+   color: black;
+    /*font-family: 'Marvel', sans-serif;*/
+}
+.main-wrapper p{
+  margin-bottom:20px; 
+  padding-right: 15px;
+  padding-left:15px;
+  line-height: 175%;
+  letter-spacing: -.10px;
+  font-size: 1.5rem;
+}
+/*****************************************************************/
+header{
+    background: black;
+   /*background-image: url(../images/psycho_prod2.jpg);*/
+    /*text-align: right;*/
+    border-bottom: 1px solid #cccccc;
+}
+.head1{
+    color:white;
+    /*color: #BE4345;*/
+   /* background:#4aaaa5;*/
+   background-color: black;
+    padding:30px;
+    font-weight: bold;
+    margin-bottom:0;
+    /*font-size:26px; */
+    /*font-size: 100%;*/
+}
+h2{
+    /*color:#4aaaa5;*/
+    /*padding: 40px 30px 30px 30px;*/
+    font-weight: bold;
+    /*font-size:24px;*/
+}
+/*.answers{
+    padding:0;
+}
+.questions{
+}*/
+.questions{
+    /*The border-box value alters the box model so
+    that any border or padding property values are 
+    included within the width and height of an element.*/
+    box-sizing: border-box;
+    float: left;
+    /*Set Margin to float secton*/
+        /*margin-left: 1.5%;*/
+        /*margin-right: 1.5%;*/
+    /*If width is not given, block will default to 
+     contents width, when using a float*/
+        width: 50%;      
+    /****************************/
+    padding:0px 10px;
+    /*height: 50px;*/
+    /*width: 500px;*/
+    /*background-color: blue;*/
+    /*margin-left: 1.25rem;*/
+    margin-top: 10px;
+    margin-bottom: 10px;
+    
+    border-radius: 10px;
+    color: white;
+    overflow:hidden;
+}
+.answers{
+    float: left;
+     /*Set Margin to float secton*/
+     /*1: margin: 0 1.5%;*/
+     /*If width is not given, block will default to 
+     contents width, when using a float*/
+    /*width: 10%;*/
+    /*float: left;*/
+    /****************************/
+   /* 2:height: 50px;*/
+    /*background-color: red;*/
+    /*3:margin:10px;*/
+    margin-top:10px;
+    margin-bottom:10px;
+    /*margin-left: 1.25rem;*/
+    /*4:border-radius: 10px;*/
+    color: white;
+}
+#imageNameOutput, #songNameOutput, ol{
+    text-align:center;
+}
 #hiddenBandNameOutput{
 	letter-spacing: 4px;
+}
+/*#imageOutput{
+    width:295px;
+}*/
+/*.row{
+    overflow:auto;
+}*/
+/*********************************************
+NAVBAR
+*********************************************/
+.nav-item{
+    display: inline-block;
+    margin-left:0;
+    margin-right:0;
+    line-height: 18px;
+    color: #999;
+    text-decoration: none;
+    border-left: 1px solid #efefef;
+  }
+  .nav-item:first-child {
+    border-left: 0 none;
+  }
+  .nav a:link, nav a:visited {
+    color: #cccccc;
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold;
+}
+.nav a{
+    padding-left:5px;
+    padding-right:5px;
+}
+.nav a:hover {
+    color:#4aaaa5;
+}
+.nav a:visited{
+    color:#377F7C;
+}
+.nav a:active{
+    color:#84F6F1;
+}
+/***************************
+MAIN CONTENT
+***************************/
+#profilePic{
+    float:left;
+    margin:0px 25px 25px 15px;
+}
+hr{
+    margin:0px 30px 0px 30px;
+    padding:0;
+    border-style:solid;
+    color:#cccccc;
+}
+
+main{
+    margin-left: auto;
+    margin-right: auto;
+    margin-top:40px;/*Required to display top gray margin*/
+    margin-bottom:40px;/*Required to display bottom gray margin, container requires overflow property*/
+    background: #ffffff;
+    padding:0px 30px;/*Display left/right white padding*/
+    border: 1px solid #dddddd;
+    overflow:hidden;
+}
+.main-content{
+    /*background-color: teal;*/
+    /*margin-top:30px;*/
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-bottom: 15px;/*padding-bottom: 15px + margin-bottom: 25px, from profilePic, makes gutter even with h2 padding-top: 40px*/
+}
+.main-wrapper{
+    padding: 20px;
+}
+/***************************
+CONTACT FORM
+***************************/
+.contact-group{
+    padding: 0 15px;
+}
+.contact-group label {
+    color: #4aaaa5;
+    cursor: pointer;
+    font-weight: 400;
+  }
+  .contact-group input{
+      color: #777777;
+  }
+  .contact-group input,
+  .contact-group select,
+  .contact-group textarea {
+    border: 1px solid #c6c9cc;
+    /*make all the fields block instead of inline*/
+    display: block;
+    margin: 5px 0 10px 0;
+    padding: 5px 8px;
+  }
+  .contact-group input,
+  .contact-group textarea {
+    width: 100%;
+  }
+  .contact-group select {
+    height: 34px;
+    width: 60px;
+  }
+  .contact-group textarea {
+    height: 78px;
+  }
+  form{
+      margin-bottom:15px;/*15px more is added from main-content padding-bottom:15px, so total bottom margin is 30px*/
+      /*background-color: orange;*/
+  }
+  /***************************
+BUTTON
+***************************/
+ .btn-properties{
+    background-color: #4aaaa5;
+    color: #ffffff;
+    border: none;
+}
+.btn-properties:hover{
+   background-color: #dddddd;
+   color: #4aaaa5;
+}
+
+/***************************
+FOOTER
+***************************/
+footer{
+    /*background-color:#666666;*/
+    background-color:black;
+    color:#dddddd;
+   text-align:center;
+   font-size: 10px;
+   font-weight: bold;
+   height:50px;
+}
+.stripe{
+    /*height:4px;*/
+    height:12.5px;
+    width:100%;
+    /*background: #BE4345;*/
+    background: black;
+}
+footer p{
+    padding-top:20px;
+    /*background-color:#666666;*/
+    margin:0;
+    height:37.5px;
+}
+/*************************************************
+        PORTFOLIO IMAGES
+*************************************************/
+.card{
+    margin-bottom: 15px;
+}
+
+.card-title{
+    margin-bottom:15px;
+}
+
+.card p{
+        background-color:rgba(74,170,165,0.5);
+        padding-top: 25px;
+        padding-bottom:25px;
+        color: #f1f1f1;
 }
