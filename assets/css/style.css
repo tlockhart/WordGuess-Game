@@ -3,33 +3,13 @@
     src: url(../fonts/Rakoon_PersonalUse.ttf);
 }
 .white-row{
-    /*background:white;*/
-    /*background: url(../images/concrete_seamless.png);*/
-    background:#993D33;
-     
-      
+    background:#993D33;    
 }
 .gray-row{
     background-image: url(../images/rounds2.png);
-     /* Full height */
-    /* height: 100%;*/
-
-     /* Center and scale the image nicely */
-     /*background-position: center;*/
-
-    
-    /*background-size: auto*/
-    /*background-size: cover;*/
-    /*background-repeat: repeat space;*/
     width:100%;
-height:100%;
-/*position:absolute;
-top:0;
-bottom:0;
-right:0;
-left:0;*/
+    height:100%;
    background-repeat: repeat repeat;
-   /*background-repeat: round space;*/
 }
 /*********************************************/
 
@@ -41,13 +21,10 @@ body{
 h1{
     font-family: PFunk;
 }
-h2, h3{
-   /*font-family: 'Georgia', Times, Times New Roman, serif;*/
-   
+h2, h3{  
    font-family: 'Open Sans Condensed', sans-serif;
    color: black;
    font-weight: bold;
-    /*font-family: 'Marvel', sans-serif;*/
 }
 #instructionOutput, #winsCtrOutput, #hiddenBandNameOutput, #remainingGuessesOutput, #userIncorrectGuessesOutput{
     font-size: 1.375rem;
@@ -63,20 +40,15 @@ h2, h3{
 /*****************************************************************/
 header{
     background: black;
-   /*background-image: url(../images/psycho_prod2.jpg);*/
-    /*text-align: right;*/
     border-bottom: 1px solid #cccccc;
 }
 .head1{
-    color:white;
-    /*color: #BE4345;*/
-   /* background:#4aaaa5;*/
+   /* color:white;*/
+   color:#993D33;
    background-color: black;
     padding:30px;
     font-weight: bold;
     margin-bottom:0;
-    /*font-size:26px; */
-    /*font-size: 100%;*/
 }
 
 .questions{
@@ -85,41 +57,19 @@ header{
     included within the width and height of an element.*/
     box-sizing: border-box;
     float: left;
-    /*Set Margin to float secton*/
-        /*margin-left: 1.5%;*/
-        /*margin-right: 1.5%;*/
-    /*If width is not given, block will default to 
-     contents width, when using a float*/
         width: 50%;      
     /****************************/
     padding:0px 10px;
-    /*height: 50px;*/
-    /*width: 500px;*/
-    /*background-color: blue;*/
-    /*margin-left: 1.25rem;*/
     margin-top: 10px;
     margin-bottom: 10px;
-    
     border-radius: 10px;
     color: white;
     overflow:hidden;
 }
 .answers{
-    float: left;
-     /*Set Margin to float secton*/
-     /*1: margin: 0 1.5%;*/
-     /*If width is not given, block will default to 
-     contents width, when using a float*/
-    /*width: 10%;*/
-    /*float: left;*/
-    /****************************/
-   /* 2:height: 50px;*/
-    /*background-color: red;*/
-    /*3:margin:10px;*/
+   /* float: left;*/
     margin-top:10px;
     margin-bottom:10px;
-    /*margin-left: 1.25rem;*/
-    /*4:border-radius: 10px;*/
     color: white;
 }
 #imageNameOutput, #songNameOutput, ol{
@@ -128,16 +78,10 @@ header{
 #hiddenBandNameOutput{
 	letter-spacing: 4px;
 }
-/*#imageOutput{
-    width:295px;
-}*/
-/*.row{
-    overflow:auto;
-}*/
 /*********************************************
 NAVBAR
 *********************************************/
-.nav-item{
+/*.nav-item{
     display: inline-block;
     margin-left:0;
     margin-right:0;
@@ -167,7 +111,7 @@ NAVBAR
 }
 .nav a:active{
     color:#84F6F1;
-}
+}*/
 /***************************
 MAIN CONTENT
 ***************************/
@@ -193,15 +137,12 @@ main{
     overflow:hidden;
 }
 .main-content{
-    /*background-color: teal;*/
-    /*margin-top:30px;*/
     padding-left: 30px;
     padding-right: 30px;
     padding-bottom: 15px;/*padding-bottom: 15px + margin-bottom: 25px, from profilePic, makes gutter even with h2 padding-top: 40px*/
 }
 .main-wrapper{
     padding: 20px;
-    /*background: url(../images/concrete_seamless.png);*/
 }
 /***************************
 CONTACT FORM
@@ -239,10 +180,9 @@ CONTACT FORM
   }
   form{
       margin-bottom:15px;/*15px more is added from main-content padding-bottom:15px, so total bottom margin is 30px*/
-      /*background-color: orange;*/
   }
-  /***************************
-BUTTON
+/***************************
+*BUTTON
 ***************************/
  .btn-properties{
     background-color: #4aaaa5;
@@ -267,22 +207,19 @@ footer{
    height:50px;
 }
 .stripe{
-    /*height:4px;*/
     height:12.5px;
     width:100%;
-    /*background: #BE4345;*/
     background: black;
 }
 footer p{
     padding-top:20px;
-    /*background-color:#666666;*/
     margin:0;
     height:37.5px;
 }
 /*************************************************
         PORTFOLIO IMAGES
 *************************************************/
-.card{
+/*.card{
     margin-bottom: 15px;
 }
 
@@ -295,4 +232,4 @@ footer p{
         padding-top: 25px;
         padding-bottom:25px;
         color: #f1f1f1;
-}
+}*/

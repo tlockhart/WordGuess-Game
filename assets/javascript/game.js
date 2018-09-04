@@ -43,6 +43,9 @@ var gameObject = {
     hasGameEnded : function(){
         return this.state === states.END || this.bandNameIndex === this.bands.length-1;
     },
+    /*hasGameStarted : function(){
+        return this.state === states.STA || this.bandNameIndex === this.bands.length-1;
+    },*/
     hasUserLoss : function(){
         return this.state === states.LOSS;
     },
@@ -360,6 +363,37 @@ var gameObject = {
         this.clearUserIncorrectGuessesValue();
         this.displayOutput(userIncorrectGuessesRef, this.userIncorrectGuesses);
     },
+    displayBeginGameScreen : function(){
+        /*this.clearSongNameDisplay();
+        this.clearCurrentBandNameValue(); */      
+        this.isMediaAdded = false;
+
+        //9/03:Display Default Image
+        //this.addDefaultImageDisplay("imageOutput");
+
+        this.clearHiddenBandNameValue();
+        this.displayOutput(imageNameRef, "");
+        //1. Change Instructions
+        this.displayOutput(instructionRef, this.startMessage);
+        //2. Reset Win Counter
+        this.clearWinsCTRValue();
+        this.displayOutput(winsCtrRef, this.winsCtr);
+        //3. Reset BandName Index Value
+        this.bandNameIndex = 0;
+        console.log("DISPLAYEND-GAMESCREEN: GAME OBJECT RESET TO 0: BandIndex = "+this.bandNameIndex);
+        //4. Clear Hidden Band Name
+        this.clearHiddenBandNameValue();
+        this.clearCurrentBandNameValue();
+        //5. CREATE HIDDEN BAND DISPLAY
+        this.fillHiddenBandName(this.bands[this.bandNameIndex]);
+        this.displayOutput(hiddenBandNameRef, this.hiddenBandNameString);
+
+        //6.Reset Remaining Guesses
+        this.setRemainingGuessesValue();
+        this.displayOutput(remainingGuessesRef, this.remainingGuesses);
+        this.clearUserIncorrectGuessesValue();
+        this.displayOutput(userIncorrectGuessesRef, this.userIncorrectGuesses);
+    },
     displayResetALLGameScreen : function(){
         this.clearSongNameDisplay();
         this.clearCurrentBandNameValue();
@@ -521,22 +555,11 @@ document.onkeyup = function(event) {
        if(gameObject.isGameDorment())
        {
            console.log("*GAME NOT ENDED AND NOT WON*: Starting Game");
+           //9/04/2018: 
+           gameObject.displayBeginGameScreen();
            //Step6b: Set game state to start
             gameObject.setState(states.START);
             console.log("Game is started!");
-
-          gameObject.currentBand = gameObject.bands[gameObject.bandNameIndex];
-           console.log( "My current Band = "+gameObject.currentBand);
-           gameObject.numOfDashes = gameObject.currentBand.length;
-
-          //Set the hiddenBandName
-          gameObject.fillHiddenBandName(gameObject.currentBand);
-
-          //Display the hiddenBandName
-         gameObject.displayOutput(hiddenBandNameRef, gameObject.hiddenBandNameString);
-
-          //Display Remaining Guesses
-          gameObject.displayOutput(remainingGuessesRef, gameObject.remainingGuesses);
        }
        //Handles Winning Condition only, not END OF GAME
        else if(gameObject.wasGameWon() && !gameObject.hasGameEnded()){
@@ -568,7 +591,7 @@ document.onkeyup = function(event) {
             console.log("*9/02/2018: USER HAS LOSS*: Starting Game");
             gameObject.displayEndGameScreen();
            gameObject.setState(states.START);
-        }         
+        }      
     }//if 
     /**************************************************************************************************************
     *Step7: If game state is START: And event.key is a letter or a number, then update the display in realtime
