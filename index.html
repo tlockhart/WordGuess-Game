@@ -17,37 +17,25 @@
     <link href="https://fonts.googleapis.com/css?family=Marvel|Open+Sans+Condensed:300" rel="stylesheet">
     
 </head>
-<body class="white-row">
+<body class="main-row">
+    <div class = "container-fluid d-flex flex-column wrapper px-0">
     <!----------------------------------------------------------------->
-    <div class="container-fluid px-0">
+    <div class="container-fluid px-0 w-100"><!--header-->
         <!------------------START OF HEADER---------------------->
         <header class="row align-items-center mx-0"><!--row-->
-                <div class="col-2 align-self-start">
-                    <!--BLANK-->
-                </div><!--col-->
-                <div class="col-8 align-self-start pl-0">
+                <div class="col-12 align-self-start pl-0">
                     <h1 class="text-center head1">HANGMAN: Funk Edition</h1>
                 </div><!--col-->
-                    </div><!--row-->
-                </div><!--col-->
-                <div class="col-2 align-self-start">
-                            <!--BLANK-->
-                </div><!--col-->
-            </header><!--row-->       
+         </header><!--row-->       
                     <!--------------------END OF HEADER------------------------>
                     <!------------------START OF GRAY ROW---------------------->
          <!------------------------------CHANGES START HERE---------------------------------------->
-        <div class="row gray-row no-gutters"><!--encapsulate main with gray-->
-            <div class="col-3 gray-row"> <!--blank Column-->
+        <div class="row no-gutters"><!--encapsulate main with gray-->
+            <div class="col-3"> <!--blank Column-->
             </div><!--blank Column-->
             <div class="col-5">
-                    <main class="row px-0 no-gutters white-row">
+                    <main class="row px-0 no-gutters main-row flex-fill">
                                 <div class="col-12">
-                                    <!--div class="row no-gutters">
-                                            <div class="col-12 align-self-start">
-                                            </div>
-                                    </div--><!--row-->
-                                    <!--2ADDED SECTION-->
                                     <div class="row no-gutters">
                                             <div class="col-12 main-content">
                                                 <div class="row no-gutters justify-content-center main-wrapper clearfix">
@@ -72,20 +60,19 @@
                                     </div><!--row-->
                                 </div><!--col-12-->
                     </main><!--row-->
-            </div><!--gray-row col-8-->
+            </div><!--col-8-->
 
-            <div class="col-3 gray-row"> <!--blank Column-->
+            <div class="col-3"> <!--blank Column-->
             </div><!--col--><!--blank Column-->
 <!------------------------------CHANGES END HERE---------------------------------------->
-                    <div class="col-12 align-self-start"><!--Footer Wraps-->
-                            <footer class="col-12 px-0">
+                            <footer class="container-fluid w-100 align-self-start">
                                 <div class="stripe"></div>
                                 <p>Copyright &copy;</p>
                             </footer>
-                    </div> <!--col-->
-        </div><!-- gray-row-->
-        <!------------------END OF GRAY ROW---------------------->
+        </div><!-- row main-->
+        <!------------------END OF MAIN ROW---------------------->
     </div><!--container-->
+</div><!--wrapper-->
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
@@ -93,7 +80,6 @@
         crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>
-<!----------------------------------------------------------------->
 <!--JS Code-->
     <script type="text/javascript" src="assets/javascript/game.js"></script>
 </body>
