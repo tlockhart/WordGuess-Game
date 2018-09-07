@@ -68,6 +68,7 @@ var gameObject = {
         var imageName = this.hiddenBandName.join("");
         var imageSource = "assets/images/"+imageName.replace(/\s/g,'')+".jpg";
         var img = document.createElement("IMG");
+        img.className = "img-fluid";
         img.src = imageSource;
         img.setAttribute('id', this.imageID);
         document.getElementById(Id).appendChild(img);
@@ -77,6 +78,7 @@ var gameObject = {
         var imageName = this.hiddenBandName.join("");
         var imageSource = "assets/images/urban.png";
         var img = document.createElement("IMG");
+        img.className = "img-fluid";
         img.src = imageSource;
         img.setAttribute('id', this.defaultImageID);
         document.getElementById(Id).appendChild(img);
