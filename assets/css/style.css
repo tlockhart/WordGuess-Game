@@ -2,6 +2,16 @@
     font-family: PFunk;
     src: url(../fonts/Rakoon_PersonalUse.ttf);
 }
+html{
+    /*STEP1*/
+    min-height: 100%;
+    position: relative;
+}
+body{
+    /*STEP2*/
+    margin:0 0 50px 0;
+
+}
 body, wrapper{
     min-height:100vh;
 }
@@ -231,8 +241,12 @@ footer{
     text-align:center;
     font-size: 10px;
     font-weight: bold;
-    height:50px;
     border-Top: 1px solid #cccccc;
+    /*Step3*/
+    height:50px;
+    position: absolute;
+    bottom:0;
+    
 }
 .stripe{
     height:12.5px;
@@ -240,7 +254,7 @@ footer{
     background: black;
 }
 footer p{
-    padding-top:15px;
+    /*padding-top:15px;*/
     margin:0;
     height:37.5px;
 }
