@@ -1,4 +1,6 @@
-# WordGuess-Game
+<h1 align="center">WordGuess-Game</h1>
+<p align="center"><kbd><img src ="assets/images/hangman.jpg" /></kbd></p><br/>
+
 This repo is a *Funk Version* of the classic hangman game.  It cycles through a list of 70's and 80's Funk bands and asks the player to guess the band name by clicking a key.  The game displays the following:
 1. Instruction
 1. Number of Wins
