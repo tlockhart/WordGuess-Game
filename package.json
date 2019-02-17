@@ -1,0 +1,26 @@
+{
+  "name": "wordguess-game",
+  "version": "1.0.0",
+  "description": "Hangman",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint ./",
+    "lint:fix": "eslint --fix ./",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tlockhart/WordGuess-Game.git"
+  },
+  "author": "Tony Lockhart",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tlockhart/WordGuess-Game/issues"
+  },
+  "homepage": "https://github.com/tlockhart/WordGuess-Game#readme",
+  "devDependencies": {
+    "eslint": "^5.14.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.16.0"
+  }
+}
